@@ -1,18 +1,52 @@
-import { Accessor, createEffect, mergeProps, on, onMount, ParentComponent } from 'solid-js';
+import {
+	Accessor,
+	createEffect,
+	mergeProps,
+	on,
+	onCleanup,
+	onMount,
+	ParentComponent,
+	Setter,
+} from 'solid-js';
+import { Dynamic } from 'solid-js/web';
+
+export const getAria = (
+	id: string,
+	isOpen: Accessor<boolean>,
+	setIsOpen: Setter<boolean>
+) => ({
+	tabindex: 0,
+	'aria-controls': id,
+	'aria-expanded': isOpen(),
+	onKeyDown: (event: KeyboardEvent) => {
+		if (event.code === 'Enter' || event.code === 'Space') {
+			event.preventDefault();
+			event.stopPropagation();
+			setIsOpen(!isOpen());
+		}
+	},
+});
 
 type Props = {
 	signal: Accessor<boolean>;
-	class?: string;
 	as?: keyof HTMLElementTagNameMap;
+	class?: string;
+	ariaId?: string;
+	style?: string;
+	id?: string;
 };
 
 export const Collapse: ParentComponent<Props> = (props) => {
-	let collapseElem = null as unknown as HTMLDivElement;
-	const mergedProps = mergeProps({ class: undefined, signal: undefined, as: 'div' }, props);
+	let collapseElem = null as unknown as HTMLElement;
+
+	const mergedProps = mergeProps({ class: '', as: 'div', style: '' }, props);
 
 	onMount(() => {
-		collapseElem.style.height = '0';
-		collapseElem.style.overflow = 'hidden';
+		if (!mergedProps.signal()) {
+			collapseElem.style.height = '0';
+			collapseElem.style.overflow = 'hidden';
+			collapseElem.style.display = 'none';
+		}
 	});
 
 	createEffect(
@@ -21,11 +55,13 @@ export const Collapse: ParentComponent<Props> = (props) => {
 			() => {
 				collapseElem.style.display = '';
 				collapseElem.style.height = `${collapseElem.scrollHeight}px`;
-				if (mergedProps.signal() === false) {
-					setTimeout(() => {
+
+				if (!mergedProps.signal()) {
+					const triggerClose = setTimeout(() => {
 						collapseElem.style.height = '0';
 						collapseElem.style.overflow = 'hidden';
-					}, 10);
+					});
+					onCleanup(() => clearTimeout(triggerClose));
 				}
 			},
 			{ defer: true }
@@ -35,20 +71,41 @@ export const Collapse: ParentComponent<Props> = (props) => {
 	const handleTransitionEnd = () => {
 		setTimeout(() => {
 			if (mergedProps.signal()) {
-				collapseElem.removeAttribute('style');
+				collapseElem.style.height = '';
+				collapseElem.style.overflow = '';
 			} else {
 				collapseElem.style.display = 'none';
 			}
 		});
 	};
 
+	const setRef = (internalRef: HTMLElement) => {
+		collapseElem = internalRef;
+	};
+
+	const a11yProps = () => {
+		if (mergedProps.ariaId) {
+			return {
+				id: mergedProps.ariaId,
+				'aria-role': 'region',
+			};
+		}
+
+		return {
+			id: mergedProps.id,
+		};
+	};
+
 	return (
-		<div
-			ref={collapseElem}
-			class={`${mergedProps.class ?? ''}`}
+		<Dynamic
+			{...a11yProps()}
+			ref={setRef}
+			component={mergedProps.as}
+			style={mergedProps.style}
+			class={mergedProps.class}
 			onTransitionEnd={handleTransitionEnd}
 		>
-			{props.children}
-		</div>
+			{mergedProps.children}
+		</Dynamic>
 	);
 };

@@ -8,18 +8,23 @@ Tiny and performant collapse component for SolidJS.
 
 ## Features
 
-- Pure CSS height transition, no _requestAnimationFrame_ or any other JS height computation
-- Minimal API: Just define a CSS transition and a signal and you're ready to go
+- Pure CSS height transition, no javascript animation
+- Minimal API: Just define a signal and a CSS transition and you're ready to go
+- Fully accessible with keyboard navigation
+- Works within loops
+- Super lightweight
 
 <br />
 
 ## API
 
-| Props  | Description                             | Type                | Default   | Required           |
-| ------ | --------------------------------------- | ------------------- | --------- | ------------------ |
-| signal | Signal to control collapse              | Accessor\<boolean\> | undefined | :white_check_mark: |
-| class  | CSS class that includes your transition | string              | undefined | :x:                |
-| as     | Element tag to render instead of `div`  | string              | div       | :x:                |
+| Props      | Description                            | Type                | Default     | Required           |
+| ---------- | -------------------------------------- | ------------------- | ----------- | ------------------ |
+| **signal** | Signal to control collapse             | Accessor\<boolean\> | `undefined` | :white_check_mark: |
+| **as**     | Element tag to render instead of `div` | string              | `div`       | :x:                |
+| **class**  | CSS classes of the collapse element    | string              | `''`        | :x:                |
+| **style**  | Inline styles of the collapse element  | string              | `''`        | :x:                |
+| **id**     | Id of the collapse element             | string              | `undefined` | :x:                |
 
 <br/>
 
@@ -38,7 +43,7 @@ yarn add solid-collapse
 **1. In a CSS file:**
 
 ```css
-.collapse {
+.my-classname {
   transition: height 400ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 ```
@@ -56,9 +61,11 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={() => setIsOpen(!isOpen())}>Expand me</button>
-      <Collapse signal={isOpen} class="collapse">
-        I am a bunch of expanded text
+      <button type="button" onClick={() => setIsOpen(!isOpen())}>
+        Expand me
+      </button>
+      <Collapse signal={isOpen} class="my-classname">
+        I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>
   );
@@ -69,47 +76,60 @@ const App = () => {
 
 ## Accessibility
 
-Since this package doesn't provide any element to trigger the collapse, you are in charge of
-setting up accessibility:
+If you want to obtain keyboard navigation and assistive technologies support:
+
+1. Create an ID (or write your own) and pass it to `ariaId` prop
+2. Import the `getAria` function and spread it in
+   your trigger element:
 
 ```jsx
 import { createSignal, createUniqueId } from 'solid-js';
-import { Collapse } from 'solid-collapse';
+import { Collapse, getAria } from 'solid-collapse';
 
 const App = () => {
   const [isOpen, setIsOpen] = createSignal(false);
+
   const id = createUniqueId();
-
-  const ariaTrigger = {
-    'aria-expanded': isOpen(),
-    'aria-controls': id,
-    tabindex: 0,
-    onKeyDown: (event) => {
-      if (event.code === 'Enter' || event.code === 'Space') {
-        event.preventDefault();
-        setIsOpen(!isOpen());
-      }
-    },
-  };
-
-  const ariaCollapse = {
-    id,
-    role: 'region',
-  };
 
   return (
     <div>
-      <div onClick={() => setIsOpen(!isOpen())} {...ariaTrigger}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen())}
+        {...getAria(id, isOpen, setIsOpen)}
+      >
         Expand me
-      </div>
-      <Collapse as="p" signal={isOpen} class="collapse" {...ariaCollapse}>
-        I am a bunch of expanded text
+      </button>
+      <Collapse signal={isOpen} class="collapse" ariaId={id}>
+        I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>
   );
 };
 ```
 
-This code is enough to have assistive technologies support and keyboard navigation.
+If you don't want to use any accessibility feature but you want to set the `id` attribute, just set it as usual:
 
-> **Note:** `tabindex` is not necessary if the trigger is a native interactive element like a button or an anchor.
+```jsx
+<Collapse signal={isOpen} class="collapse" id="my_collapse_id">
+  I am a bunch of expanded text
+</Collapse>
+```
+
+### Keyboard Controls
+
+- **Space / Enter** - Collapse expand the component
+- **Up Arrow / Tab** - Navigate to next focusable element
+- **Down Arrow / Tab+Shift** -Navigate to previous focusable element
+
+<br />
+
+## For loops
+
+Please check the examples on the [demo website]().
+
+<br />
+
+## License
+
+0BSD Licensed. Copyright (c) Simone Mastromattei 2022.

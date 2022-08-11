@@ -1,0 +1,14 @@
+{
+	"trailingComma": "es5",
+	"singleQuote": true,
+	"printWidth": 95,
+	"useTabs": true,
+	"overrides": [
+		{
+			"files": "README.md",
+			"options": {
+				"useTabs": false
+			}
+		}
+	]
+}

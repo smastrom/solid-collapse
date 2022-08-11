@@ -8,11 +8,11 @@ Tiny and performant collapse component for SolidJS.
 
 ## Features
 
-- Pure CSS height transition, no javascript animation
-- Minimal API: Just define a signal and a CSS transition and you're ready to go
+- Pure CSS height transition, no javascript animations
+- Minimal API: Just pass a signal and you're ready to go
 - Fully accessible with keyboard navigation
 - Works within loops
-- Super lightweight
+- Super lightweight, only 500B gzipped
 
 <br />
 
@@ -22,9 +22,9 @@ Tiny and performant collapse component for SolidJS.
 | ---------- | -------------------------------------- | ------------------- | ----------- | ------------------ |
 | **signal** | Signal to control collapse             | Accessor\<boolean\> | `undefined` | :white_check_mark: |
 | **as**     | Element tag to render instead of `div` | string              | `div`       | :x:                |
-| **class**  | CSS classes of the collapse element    | string              | `''`        | :x:                |
-| **style**  | Inline styles of the collapse element  | string              | `''`        | :x:                |
-| **id**     | Id of the collapse element             | string              | `undefined` | :x:                |
+| **ariaId** | Id to pass if using `getAria`.         | string              | `undefined` | :x:                |
+
+`class`, `style` and `id` are available as well.
 
 <br/>
 
@@ -79,8 +79,7 @@ const App = () => {
 If you want to obtain keyboard navigation and assistive technologies support:
 
 1. Create an ID (or write your own) and pass it to `ariaId` prop
-2. Import the `getAria` function and spread it in
-   your trigger element:
+2. Import `getAria` and spread the function in your trigger element:
 
 ```jsx
 import { createSignal, createUniqueId } from 'solid-js';
@@ -108,7 +107,7 @@ const App = () => {
 };
 ```
 
-If you don't want to use any accessibility feature but you want to set the `id` attribute, just set it as usual:
+Use **ariaId** instead of **id** only if you're using accessibility features. If not, just set it as usual:
 
 ```jsx
 <Collapse signal={isOpen} class="collapse" id="my_collapse_id">

@@ -12,7 +12,7 @@ const App: Component = () => {
 
 	let signalsArr = list.map((initialVal) => createSignal(initialVal));
 
-	const handleLoop = (signalIndex: number) => {
+	const handleOpen = (signalIndex: number) => {
 		const [isOpen, setIsOpen] = signalsArr[signalIndex];
 		setIsOpen(!isOpen());
 	};
@@ -46,7 +46,7 @@ const App: Component = () => {
 						{(_, index) => (
 							<div>
 								<button
-									onClick={() => handleLoop(index())}
+									onClick={() => handleOpen(index())}
 									{...getAria(ids[index()], signalsArr[index()][0], signalsArr[index()][1])}
 								>
 									Open / Close

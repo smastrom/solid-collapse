@@ -1,34 +1,115 @@
-## Usage
+# Solid Collapse
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+Tiny and performant collapse component for SolidJS.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+[Demo and examples]()
+
+<br />
+
+## Features
+
+- Pure CSS height transition, no _requestAnimationFrame_ or any other JS height computation
+- Minimal API: Just define a CSS transition and a signal and you're ready to go
+
+<br />
+
+## API
+
+| Props  | Description                             | Type                | Default   | Required           |
+| ------ | --------------------------------------- | ------------------- | --------- | ------------------ |
+| signal | Signal to control collapse              | Accessor\<boolean\> | undefined | :white_check_mark: |
+| class  | CSS class that includes your transition | string              | undefined | :x:                |
+| as     | Element tag to render instead of `div`  | string              | div       | :x:                |
+
+<br/>
+
+## Installation
 
 ```bash
-$ npm install # or pnpm install or yarn install
+yarn add solid-collapse
+# npm i -S solid-collapse
+# pnpm i solid-collapse
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+<br/>
 
-## Available Scripts
+## Usage
 
-In the project directory, you can run:
+**1. In a CSS file:**
 
-### `npm dev` or `npm start`
+```css
+.collapse {
+  transition: height 400ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> You can find a complete list of CSS easings at [easings.net](https://easings.net/).
 
-The page will reload if you make edits.<br>
+**2. In a component file:**
 
-### `npm run build`
+```jsx
+import { createSignal } from 'solid-js';
+import { Collapse } from 'solid-collapse';
 
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
+const App = () => {
+  const [isOpen, setIsOpen] = createSignal(false);
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+  return (
+    <div>
+      <button onClick={() => setIsOpen(!isOpen())}>Expand me</button>
+      <Collapse signal={isOpen} class="collapse">
+        I am a bunch of expanded text
+      </Collapse>
+    </div>
+  );
+};
+```
 
-## Deployment
+<br />
 
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+## Accessibility
+
+Since this package doesn't provide any element to trigger the collapse, you are in charge of
+setting up accessibility:
+
+```jsx
+import { createSignal, createUniqueId } from 'solid-js';
+import { Collapse } from 'solid-collapse';
+
+const App = () => {
+  const [isOpen, setIsOpen] = createSignal(false);
+  const id = createUniqueId();
+
+  const ariaTrigger = {
+    'aria-expanded': isOpen(),
+    'aria-controls': id,
+    tabindex: 0,
+    onKeyDown: (event) => {
+      if (event.code === 'Enter' || event.code === 'Space') {
+        event.preventDefault();
+        setIsOpen(!isOpen());
+      }
+    },
+  };
+
+  const ariaCollapse = {
+    id,
+    role: 'region',
+  };
+
+  return (
+    <div>
+      <div onClick={() => setIsOpen(!isOpen())} {...ariaTrigger}>
+        Expand me
+      </div>
+      <Collapse as="p" signal={isOpen} class="collapse" {...ariaCollapse}>
+        I am a bunch of expanded text
+      </Collapse>
+    </div>
+  );
+};
+```
+
+This code is enough to have assistive technologies support and keyboard navigation.
+
+> **Note:** `tabindex` is not necessary if the trigger is a native interactive element like a button or an anchor.

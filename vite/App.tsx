@@ -1,10 +1,10 @@
-import { Component, createSignal, createUniqueId, For, mapArray, onMount } from 'solid-js';
+import { createSignal, createUniqueId, For, mapArray, onMount } from 'solid-js';
 
-import { Collapse, getAria } from './Collapse';
+import { Collapse, getAria } from '../src/Collapse';
 
 import styles from './App.module.css';
 
-const App: Component = () => {
+const App = () => {
 	const [isOpen, setIsOpen] = createSignal(false);
 
 	const id = createUniqueId();

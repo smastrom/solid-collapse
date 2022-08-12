@@ -8,25 +8,27 @@ Tiny and performant collapse component for SolidJS.
 
 ## Features
 
-- Pure dynamic CSS height transition, no javascript animations
+- Pure CSS height transition, no javascript animations
 - Minimal API: Just pass a signal and you're ready to go
-- Fully accessible with keyboard navigation
-- Works within loops
+- Works within loops / async loops
+- Suitable for accordions
 - Super lightweight, only 500B gzipped
 
 <br />
 
-## API
+## :jigsaw: API
 
-| Props      | Description                            | Type                | Default     | Required           |
-| ---------- | -------------------------------------- | ------------------- | ----------- | ------------------ |
-| **signal** | Signal to control collapse             | Accessor\<boolean\> | `undefined` | :white_check_mark: |
-| **as**     | Element tag to render instead of `div` | string              | `div`       | :x:                |
-| **ariaId** | Id to set if using `getAria`.          | string              | `undefined` | :x:                |
+| Props     | Description                            | Type    | Default | Required           |
+| --------- | -------------------------------------- | ------- | ------- | ------------------ |
+| **state** | Boolean value to trigger collapse      | boolean | `false` | :white_check_mark: |
+| **class** | Classname of your transition           | string  | `''`    | :x:                |
+| **as**    | Element tag to render instead of `div` | string  | `div`   | :x:                |
+
+`id`, `aria-role`, `aria-labelledby` are supported as well.
 
 <br/>
 
-## Installation
+## :hammer: Installation
 
 ```bash
 yarn add solid-collapse
@@ -36,7 +38,7 @@ yarn add solid-collapse
 
 <br/>
 
-## Usage
+## :lollipop: Usage
 
 **1. In a CSS file:**
 
@@ -64,46 +66,50 @@ const App = () => {
       <button type="button" onClick={() => setIsOpen(!isOpen())}>
         Expand me
       </button>
-      <Collapse signal={isOpen} class="my-transition">
+      <Collapse state={isOpen()} class="my-transition">
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>
   );
 };
-
-// Add the class and pass the Accessor
 ```
 
 :warning: Do not style the collapse itself! Instead, style the elements inside.
 
 <br />
 
-## Accessibility
+## :open_umbrella: Accessibility
 
-If you want to obtain keyboard navigation and assistive technologies support:
+Since this package just provides a collapsible element, you are in charge of linking your trigger element to it.
 
-1. Define an ID and pass it to `ariaId` prop (I'm using createUniqueId from Solid, but you can just write your own string).
-2. Import `getAria` and spread the function in your trigger element by passing the arguments as displayed below.
+### Focusable trigger
+
+If your trigger is a [focusable](https://html.spec.whatwg.org/multipage/interaction.html#focusable) element
+(like a `summary` or a `button`), you already have out-of-the-box keyboard controls.
+
+You just have to set the aria-attributes as displayed below:
 
 ```jsx
-import { createSignal, createUniqueId } from 'solid-js';
-import { Collapse, getAria } from 'solid-collapse';
+const ID = 'my_collapse_id';
 
 const App = () => {
   const [isOpen, setIsOpen] = createSignal(false);
 
-  const id = createUniqueId();
-
   return (
     <div>
       <button
-        type="button"
         onClick={() => setIsOpen(!isOpen())}
-        {...getAria(id, isOpen, setIsOpen)}
+        aria-controls={ID} // 2.
+        aria-expanded={isOpen()} // 3.
       >
         Expand me
       </button>
-      <Collapse signal={isOpen} class="collapse" ariaId={id}>
+      <Collapse
+        state={isOpen()}
+        class="collapse"
+        id={ID} // 1.
+        aria-role="region" // 4.
+      >
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>
@@ -111,28 +117,59 @@ const App = () => {
 };
 ```
 
-Use **ariaId** instead of **id** only if using accessibility features. If not, just set it as usual:
+[W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions)
+
+### Non-focusable trigger
+
+If your trigger is not a native focusable element (like a `div`), in addition to aria attributes, you have to manually enable keyboard controls.
+
+You can create a reusable function like the following one and spread it in your element.
 
 ```jsx
-<Collapse signal={isOpen} class="collapse" id="my_collapse_id">
-  I am a bunch of expanded text
-</Collapse>
+import { Collapse, setKeyboard } from 'solid-collapse';
+
+const setKeyDown = (setter) => ({
+  tabIndex: 0,
+  onKeyDown: (event) => {
+    if (event.code === 'Enter' || event.code === 'Space') {
+      event.stopPropagation();
+      event.preventDefault();
+      setter((accessor) => !accessor);
+    }
+  },
+});
+
+const ID = 'my_collapse_id';
+
+const App = () => {
+  const [isOpen, setIsOpen] = createSignal(false);
+
+  return (
+    <div>
+      <div
+        onClick={() => setIsOpen(!isOpen())}
+        aria-controls={ID}
+        aria-expanded={isOpen()}
+        {...setKeyDown(setIsOpen)} // Spread the function
+      >
+        Expand me
+      </div>
+      <Collapse state={isOpen()} class="collapse" id={ID} aria-role="region">
+        I am a bunch of collapsed text that wants to be expanded
+      </Collapse>
+    </div>
+  );
+};
 ```
-
-### Keyboard Controls
-
-- **Space / Enter** - Collapse expand the component
-- **Up Arrow / Tab** - Navigate to next focusable element
-- **Down Arrow / Tab+Shift** -Navigate to previous focusable element
 
 <br />
 
-## For loops
+## :cyclone: For loops, accordions
 
 Please check the examples on the [demo website]().
 
 <br />
 
-## License
+## :dvd: License
 
 0BSD Licensed. Copyright (c) Simone Mastromattei 2022.

@@ -1,1 +1,1 @@
-export { Collapse, getAria } from './Collapse';
+export { Collapse } from './Collapse';

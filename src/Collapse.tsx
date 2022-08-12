@@ -1,98 +1,90 @@
 import {
-	Accessor,
 	createEffect,
 	mergeProps,
-	on,
+	onCleanup,
 	onMount,
 	ParentComponent,
-	Setter,
+	untrack,
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-export const getAria = (
-	id: string,
-	isOpen: Accessor<boolean>,
-	setIsOpen: Setter<boolean>
-) => ({
-	tabindex: 0,
-	'aria-controls': id,
-	'aria-expanded': isOpen(),
-	onKeyDown: (event: KeyboardEvent) => {
-		if (event.code === 'Enter' || event.code === 'Space') {
-			event.preventDefault();
-			event.stopPropagation();
-			setIsOpen(!isOpen());
-		}
-	},
-});
-
-type Props = {
-	signal: Accessor<boolean>;
+type CollapseProps = {
+	state: boolean;
 	as?: keyof HTMLElementTagNameMap;
 	class?: string;
-	ariaId?: string;
 	id?: string;
+	'aria-labelledby'?: string;
+	'aria-role'?: string;
 };
-
-export const Collapse: ParentComponent<Props> = (props) => {
+/** Thank you for using **solid-collapse**. For more info read
+ * the documentation at https://github.com/smastrom/solid-collapse.
+ */
+export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	let collapseElem = null as unknown as HTMLElement;
 
-	const mergedProps = mergeProps({ class: '', as: 'div' }, props);
+	const mergedProps = mergeProps({ class: '', as: 'div', state: false }, props);
 
 	onMount(() => {
-		if (!mergedProps.signal()) {
-			collapseElem.style.height = '0';
+		if (!mergedProps.state) {
 			collapseElem.style.overflow = 'hidden';
+			collapseElem.style.height = '0px';
 			collapseElem.style.display = 'none';
 		}
 	});
 
-	createEffect(
-		on(
-			mergedProps.signal,
-			() => {
-				if (mergedProps.signal()) {
-					collapseElem.style.display = '';
-					collapseElem.style.height = `${collapseElem.scrollHeight}px`;
-				} else if (!mergedProps.signal()) {
-					collapseElem.style.overflow = 'hidden';
-					collapseElem.style.height = '0';
-				}
-			},
-			{ defer: true }
-		)
-	);
+	createEffect((prevState) => {
+		const currentState = mergedProps.state;
+		untrack(() => {
+			if (prevState !== currentState) {
+				let requestId: number;
+				let prevFrame: DOMHighResTimeStamp;
+
+				const handleAnim = (nextFrame: DOMHighResTimeStamp) => {
+					if (typeof prevFrame === 'undefined') {
+						prevFrame = nextFrame;
+						if (currentState) {
+							collapseElem.style.height = '0px';
+							return requestAnimationFrame(handleAnim);
+						}
+						collapseElem.style.height = `${collapseElem.scrollHeight}px`;
+						return requestAnimationFrame(handleAnim);
+					}
+
+					if (typeof prevFrame === 'number') {
+						if (currentState) {
+							collapseElem.style.display = '';
+							collapseElem.style.height = `${collapseElem.scrollHeight}px`;
+						} else {
+							collapseElem.style.overflow = 'hidden';
+							collapseElem.style.height = '0px';
+						}
+					}
+				};
+
+				requestId = requestAnimationFrame(handleAnim);
+
+				onCleanup(() => cancelAnimationFrame(requestId));
+			}
+		});
+		return currentState;
+	});
 
 	const handleTransitionEnd = () => {
-		if (mergedProps.signal()) {
-			collapseElem.style.height = `${collapseElem.scrollHeight}px`;
+		if (mergedProps.state) {
 			collapseElem.style.overflow = '';
+			collapseElem.style.height = '';
 		} else {
 			collapseElem.style.display = 'none';
 		}
 	};
 
-	const setRef = (internalRef: HTMLElement) => {
-		collapseElem = internalRef;
-	};
-
-	const a11yProps = () => {
-		if (mergedProps.ariaId) {
-			return {
-				id: mergedProps.ariaId,
-				'aria-role': 'region',
-			};
-		}
-
-		return {
-			id: mergedProps.id,
-		};
-	};
-
+	const setRef = (internalRef: HTMLElement) => (collapseElem = internalRef);
 	return (
 		<Dynamic
-			{...a11yProps()}
+			id={mergedProps.id}
 			ref={setRef}
+			aria-labelledby={props['aria-labelledby']}
+			aria-role={props['aria-role']}
 			component={mergedProps.as}
 			class={mergedProps.class}
 			onTransitionEnd={handleTransitionEnd}

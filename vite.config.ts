@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
+import dts from 'vite-plugin-dts';
 
 import Package from './package.json';
 
 export default defineConfig({
-	plugins: [solidPlugin()],
 	server: {
 		port: 3000,
 	},
@@ -19,4 +19,10 @@ export default defineConfig({
 			external: ['solid-js', 'solid-js/web'],
 		},
 	},
+	plugins: [
+		solidPlugin(),
+		dts({
+			include: ['src/Collapse.tsx'],
+		}),
+	],
 });

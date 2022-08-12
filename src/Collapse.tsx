@@ -3,7 +3,6 @@ import {
 	createEffect,
 	mergeProps,
 	on,
-	onCleanup,
 	onMount,
 	ParentComponent,
 	Setter,
@@ -32,14 +31,13 @@ type Props = {
 	as?: keyof HTMLElementTagNameMap;
 	class?: string;
 	ariaId?: string;
-	style?: string;
 	id?: string;
 };
 
 export const Collapse: ParentComponent<Props> = (props) => {
 	let collapseElem = null as unknown as HTMLElement;
 
-	const mergedProps = mergeProps({ class: '', as: 'div', style: '' }, props);
+	const mergedProps = mergeProps({ class: '', as: 'div' }, props);
 
 	onMount(() => {
 		if (!mergedProps.signal()) {
@@ -53,15 +51,12 @@ export const Collapse: ParentComponent<Props> = (props) => {
 		on(
 			mergedProps.signal,
 			() => {
-				collapseElem.style.display = '';
-				collapseElem.style.height = `${collapseElem.scrollHeight}px`;
-
-				if (!mergedProps.signal()) {
-					const triggerClose = setTimeout(() => {
-						collapseElem.style.height = '0';
-						collapseElem.style.overflow = 'hidden';
-					});
-					onCleanup(() => clearTimeout(triggerClose));
+				if (mergedProps.signal()) {
+					collapseElem.style.display = '';
+					collapseElem.style.height = `${collapseElem.scrollHeight}px`;
+				} else if (!mergedProps.signal()) {
+					collapseElem.style.overflow = 'hidden';
+					collapseElem.style.height = '0';
 				}
 			},
 			{ defer: true }
@@ -69,14 +64,12 @@ export const Collapse: ParentComponent<Props> = (props) => {
 	);
 
 	const handleTransitionEnd = () => {
-		setTimeout(() => {
-			if (mergedProps.signal()) {
-				collapseElem.style.height = '';
-				collapseElem.style.overflow = '';
-			} else {
-				collapseElem.style.display = 'none';
-			}
-		});
+		if (mergedProps.signal()) {
+			collapseElem.style.height = `${collapseElem.scrollHeight}px`;
+			collapseElem.style.overflow = '';
+		} else {
+			collapseElem.style.display = 'none';
+		}
 	};
 
 	const setRef = (internalRef: HTMLElement) => {
@@ -101,7 +94,6 @@ export const Collapse: ParentComponent<Props> = (props) => {
 			{...a11yProps()}
 			ref={setRef}
 			component={mergedProps.as}
-			style={mergedProps.style}
 			class={mergedProps.class}
 			onTransitionEnd={handleTransitionEnd}
 		>

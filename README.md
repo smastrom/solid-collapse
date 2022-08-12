@@ -8,7 +8,7 @@ Tiny and performant collapse component for SolidJS.
 
 ## Features
 
-- Pure CSS height transition, no javascript animations
+- Pure dynamic CSS height transition, no javascript animations
 - Minimal API: Just pass a signal and you're ready to go
 - Fully accessible with keyboard navigation
 - Works within loops
@@ -22,9 +22,7 @@ Tiny and performant collapse component for SolidJS.
 | ---------- | -------------------------------------- | ------------------- | ----------- | ------------------ |
 | **signal** | Signal to control collapse             | Accessor\<boolean\> | `undefined` | :white_check_mark: |
 | **as**     | Element tag to render instead of `div` | string              | `div`       | :x:                |
-| **ariaId** | Id to pass if using `getAria`.         | string              | `undefined` | :x:                |
-
-`class`, `style` and `id` are available as well.
+| **ariaId** | Id to set if using `getAria`.          | string              | `undefined` | :x:                |
 
 <br/>
 
@@ -43,9 +41,11 @@ yarn add solid-collapse
 **1. In a CSS file:**
 
 ```css
-.my-classname {
+.my-transition {
   transition: height 400ms cubic-bezier(0.65, 0, 0.35, 1);
 }
+
+/* Name the class however you prefer */
 ```
 
 > You can find a complete list of CSS easings at [easings.net](https://easings.net/).
@@ -64,13 +64,17 @@ const App = () => {
       <button type="button" onClick={() => setIsOpen(!isOpen())}>
         Expand me
       </button>
-      <Collapse signal={isOpen} class="my-classname">
+      <Collapse signal={isOpen} class="my-transition">
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>
   );
 };
+
+// Add the class and pass the Accessor
 ```
+
+:warning: Do not style the collapse itself! Instead, style the elements inside.
 
 <br />
 
@@ -78,8 +82,8 @@ const App = () => {
 
 If you want to obtain keyboard navigation and assistive technologies support:
 
-1. Create an ID (or write your own) and pass it to `ariaId` prop
-2. Import `getAria` and spread the function in your trigger element:
+1. Define an ID and pass it to `ariaId` prop (I'm using createUniqueId from Solid, but you can just write your own string).
+2. Import `getAria` and spread the function in your trigger element by passing the arguments as displayed below.
 
 ```jsx
 import { createSignal, createUniqueId } from 'solid-js';
@@ -107,7 +111,7 @@ const App = () => {
 };
 ```
 
-Use **ariaId** instead of **id** only if you're using accessibility features. If not, just set it as usual:
+Use **ariaId** instead of **id** only if using accessibility features. If not, just set it as usual:
 
 ```jsx
 <Collapse signal={isOpen} class="collapse" id="my_collapse_id">

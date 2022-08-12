@@ -1,6 +1,6 @@
-import { createSignal, createUniqueId, For, mapArray, onMount } from 'solid-js';
+import { createSignal, createUniqueId, For } from 'solid-js';
 
-import { Collapse, getAria } from '../src/Collapse';
+import { Collapse } from '../src/Collapse';
 
 import styles from './App.module.css';
 
@@ -21,13 +21,11 @@ const App = () => {
 
 	return (
 		<div class={styles.App}>
-			<button onClick={() => setIsOpen(!isOpen())} {...getAria(id, isOpen, setIsOpen)}>
-				Open / Close
-			</button>
+			<button onClick={() => setIsOpen(!isOpen())}>Open / Close</button>
 
 			<header class={styles.header}>
 				<div style="max-width: 600px; padding: 20px">
-					<Collapse signal={isOpen} class="collapseTransition" ariaId={id}>
+					<Collapse signal={isOpen} class="collapseTransition">
 						Phasellus sit amet bibendum mauris. Aliquam in euismod leo, eu posuere ipsum. Class
 						aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
 						himenaeos. Nunc eleifend nunc tortor, id bibendum mi rutrum vel. Nulla id tortor
@@ -45,17 +43,8 @@ const App = () => {
 					<For each={list}>
 						{(_, index) => (
 							<div>
-								<button
-									onClick={() => handleOpen(index())}
-									{...getAria(ids[index()], signalsArr[index()][0], signalsArr[index()][1])}
-								>
-									Open / Close
-								</button>
-								<Collapse
-									ariaId={ids[index()]}
-									signal={signalsArr[index()][0]}
-									class="collapseTransitionFast"
-								>
+								<button onClick={() => handleOpen(index())}>Open / Close</button>
+								<Collapse signal={signalsArr[index()][0]} class="collapseTransitionFast">
 									Phasellus sit amet bibendum mauris. Aliquam in euismod leo, eu posuere ipsum.
 									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
 									inceptos himenaeos.

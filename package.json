@@ -7,6 +7,7 @@
 		"dev": "vite",
 		"build": "rimraf dist && vite build",
 		"postbuild": "cpy dist/Collapse.d.ts dist --rename index.d.ts --flat && rimraf dist/Collapse.d.ts",
+		"build:examples": "cd examples && yarn && yarn build",
 		"serve": "vite preview"
 	},
 	"license": "0BSD",

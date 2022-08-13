@@ -40,15 +40,17 @@
 		"build:examples": "cd examples && yarn && yarn build",
 		"dev": "vite",
 		"serve": "vite preview",
-		"start": "vite"
+		"start": "vite",
+		"prepare": "husky install"
 	},
 	"lint-staged": {
-		"*.{ts,tsx}": "eslint --cache --fix",
 		"*.{ts,tsx,css,md}": "prettier --write"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"cpy-cli": "^4.1.0",
+		"husky": "^8.0.0",
+		"lint-staged": "^13.0.3",
 		"prettier": "^2.7.1",
 		"rimraf": "^3.0.2",
 		"solid-js": "^1.4.7",

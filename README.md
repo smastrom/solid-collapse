@@ -2,7 +2,7 @@
 
 Tiny and performant collapse component for SolidJS.
 
-[Demo and examples]()
+[Demo and examples](https://solid-collapse.onrender.com)
 
 <br />
 
@@ -166,10 +166,10 @@ const App = () => {
 
 ## :cyclone: For loops, accordions
 
-Please check the examples on the [demo website]().
+Please check the examples on the [demo website](https://solid-collapse.onrender.com).
 
 <br />
 
 ## :dvd: License
 
-0BSD Licensed. Copyright (c) Simone Mastromattei 2022.
+MIT Licensed. Copyright (c) Simone Mastromattei 2022.

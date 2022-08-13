@@ -1,6 +1,6 @@
 import { createSignal, Setter } from 'solid-js';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../pkg';
+import { Collapse } from 'solid-collapse';
 
 import styles from '../Components/AppLayout/styles.module.css';
 
@@ -18,15 +18,6 @@ export const BasicConfigJSX = () => {
 
 	return (
 		<div class={styles.flexContainer}>
-			<div class={styles.inputContainer}>
-				<label for="example_1_easing">Change Transition</label>
-				<select class={styles.select} id="example_1_easing">
-					<option>400ms cubic-bezier(0.65, 0, 0.35, 1)</option>
-					<option>400ms cubic-bezier(0.65, 0, 0.35, 1)</option>
-					<option>400ms cubic-bezier(0.65, 0, 0.35, 1)</option>
-					<option>400ms cubic-bezier(0.65, 0, 0.35, 1)</option>
-				</select>
-			</div>
 			<div class={styles.inputContainer} style="max-width: 200px;">
 				<label for="example_1_range">Resize Collapse</label>
 				<input
@@ -48,7 +39,7 @@ export const BasicConfigJSX = () => {
 						{...getKeydown(setIsOpen)}
 						onClick={() => setIsOpen(!isOpen())}
 						aria-label="Open Collapse"
-						class={`${styles.chevronIcon} ${
+						class={`${styles.chevronButton} ${
 							isOpen() ? `${styles.rotate} ${styles.activeChevron}` : ''
 						}`}
 					>

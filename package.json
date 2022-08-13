@@ -1,16 +1,40 @@
 {
 	"name": "solid-collapse",
 	"version": "0.9.0",
-	"description": "",
+	"private": "false",
+	"description": "Tiny and performant collapse component for SolidJS.",
+	"keywords": [
+		"solid",
+		"collapse",
+		"accordion",
+		"solid-js",
+		"solid-collapse",
+		"solid-accordion"
+	],
+	"license": "MIT",
+	"type": "module",
+	"exports": {
+		".": {
+			"import": "./dist/index.js"
+		}
+	},
+	"module": "dist/index.js",
+	"files": [
+		"dist"
+	],
 	"scripts": {
-		"start": "vite",
-		"dev": "vite",
 		"build": "rimraf dist && vite build",
 		"postbuild": "cpy dist/Collapse.d.ts dist --rename index.d.ts --flat && rimraf dist/Collapse.d.ts",
-		"build:examples": "yarn build && cpy dist examples/pkg --flat && cd examples && yarn && yarn build",
-		"serve": "vite preview"
+		"build:examples": "cd examples && yarn && yarn build",
+		"dev": "vite",
+		"serve": "vite preview",
+		"start": "vite"
 	},
-	"license": "0BSD",
+	"lint-staged": {
+		"*.{ts,tsx}": "eslint --cache --fix",
+		"*.{ts,tsx,css,md}": "prettier --write"
+	},
+	"dependencies": {},
 	"devDependencies": {
 		"cpy-cli": "^4.1.0",
 		"prettier": "^2.7.1",
@@ -18,8 +42,7 @@
 		"solid-js": "^1.4.7",
 		"typescript": "^4.7.4",
 		"vite": "^3.0.0",
-		"vite-plugin-solid": "^2.3.0",
-		"vite-plugin-dts": "^1.4.1"
-	},
-	"dependencies": {}
+		"vite-plugin-dts": "^1.4.1",
+		"vite-plugin-solid": "^2.3.0"
+	}
 }

@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"prismjs": "^1.28.0",
+		"solid-collapse": "file:dsdsd.tgz",
 		"solid-js": "^1.4.7",
 		"vite-plugin-prismjs": "^0.0.8"
 	}

@@ -1,6 +1,6 @@
 import { createEffect, createResource, createSignal, For, Show, untrack } from 'solid-js';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../../dist';
+import { Collapse } from '../../pkg';
 
 import styles from '../Components/AppLayout/styles.module.css';
 import { Spinner } from '../Components/Spinner';

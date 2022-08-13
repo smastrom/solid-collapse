@@ -9,9 +9,6 @@ export default defineConfig({
 			languages: ['jsx'],
 		}),
 	],
-	esbuild: {
-		drop: ['debugger'],
-	},
 	server: {
 		port: 3000,
 	},

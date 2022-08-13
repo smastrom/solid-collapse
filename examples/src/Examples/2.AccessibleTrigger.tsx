@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 import { setKeyDown } from '../lib/setKeyDown';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../../dist';
+import { Collapse } from '../../pkg';
 
 import styles from '../Components/AppLayout/styles.module.css';
 

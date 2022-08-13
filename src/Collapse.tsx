@@ -21,7 +21,7 @@ type CollapseProps = {
  * the documentation at https://github.com/smastrom/solid-collapse.
  */
 export const Collapse: ParentComponent<CollapseProps> = (props) => {
-	let collapseElem = null as unknown as HTMLElement;
+	let collapseElem: HTMLElement;
 
 	const mergedProps = mergeProps({ class: '', as: 'div', state: false }, props);
 
@@ -63,7 +63,6 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 				};
 
 				requestId = requestAnimationFrame(handleAnim);
-
 				onCleanup(() => cancelAnimationFrame(requestId));
 			}
 		});
@@ -80,6 +79,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	};
 
 	const setRef = (internalRef: HTMLElement) => (collapseElem = internalRef);
+
 	return (
 		<Dynamic
 			id={mergedProps.id}

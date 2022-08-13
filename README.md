@@ -84,7 +84,7 @@ Since this package just provides a collapsible element, you are in charge of lin
 
 ### Focusable trigger
 
-If your trigger is a [focusable](https://html.spec.whatwg.org/multipage/interaction.html#focusable) element
+If your trigger is [focusable](https://html.spec.whatwg.org/multipage/interaction.html#focusable)
 (like a `summary` or a `button`), you already have out-of-the-box keyboard controls.
 
 You just have to set the aria-attributes as displayed below:

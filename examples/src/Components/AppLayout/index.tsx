@@ -54,6 +54,7 @@ export const App = () => (
 				<For each={Examples}>
 					{({ name }, index) => (
 						<button
+							type="button"
 							onClick={() =>
 								setCurrentView({
 									data: Examples[index()],
@@ -103,6 +104,7 @@ export const App = () => (
 		{/* Footer */}
 
 		<button
+			type="button"
 			class={styles.codeButton}
 			onClick={() => {
 				setIsCodeOpen(!isCodeOpen());

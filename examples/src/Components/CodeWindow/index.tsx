@@ -19,6 +19,8 @@ export const CodeWindow = ({ view, prevClick, nextClick, length, setVisibility }
 	let containerRef = null as unknown as HTMLDivElement;
 	let contentRef = null as unknown as HTMLPreElement;
 
+	const [isCopied, setIsCopied] = createSignal(false);
+
 	/* Lifecycle */
 
 	onMount(() => {
@@ -62,6 +64,13 @@ export const CodeWindow = ({ view, prevClick, nextClick, length, setVisibility }
 		}
 	};
 
+	const handleCopy = async (code: string) => {
+		await navigator.clipboard.writeText(code);
+		setIsCopied(true);
+		await new Promise((resolve) => setTimeout(resolve, 2000));
+		setIsCopied(false);
+	};
+
 	const handleEscape = (event: KeyboardEvent) => {
 		if (event.code === 'Escape') {
 			setVisibility(false);
@@ -78,7 +87,12 @@ export const CodeWindow = ({ view, prevClick, nextClick, length, setVisibility }
 			<section class={styles.container} ref={containerRef}>
 				<h1 class={styles.title}>{view().data.name}</h1>
 				<nav class={styles.linksNav}>
-					<button>Copy Code</button>
+					{navigator.clipboard && (
+						<button type="button" onClick={() => handleCopy(view().data.code)}>
+							{isCopied() ? 'Copied!' : 'Copy Code'}
+						</button>
+					)}
+
 					<a
 						href="https://github.com/smastrom/solid-collapse/tree/main/examples/src/Examples"
 						target="_blank"
@@ -91,6 +105,7 @@ export const CodeWindow = ({ view, prevClick, nextClick, length, setVisibility }
 					<nav aria-hidden={view().index === 0 ? 'true' : undefined}>
 						{view().index !== 0 && (
 							<button
+								type="button"
 								ref={prevButtonRef}
 								onClick={prevClick}
 								class={`${styles.navButton} ${styles.prevButton}`}
@@ -108,6 +123,7 @@ export const CodeWindow = ({ view, prevClick, nextClick, length, setVisibility }
 					<nav aria-hidden={view().index === length - 1 ? 'true' : undefined}>
 						{view().index !== length - 1 && (
 							<button
+								type="button"
 								ref={nextButtonRef}
 								onClick={nextClick}
 								class={`${styles.navButton} ${styles.nextButton}`}

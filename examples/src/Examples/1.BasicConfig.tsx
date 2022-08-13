@@ -24,7 +24,7 @@ export const BasicConfigJSX = () => {
 					id="example_1_range"
 					type="range"
 					min="150"
-					max="800"
+					max="650"
 					step="1"
 					onInput={(event) => setWidth(event.currentTarget.value)}
 				/>

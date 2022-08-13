@@ -37,14 +37,13 @@
 	"scripts": {
 		"build": "rimraf dist && vite build",
 		"postbuild": "cpy dist/Collapse.d.ts dist --rename index.d.ts --flat && rimraf dist/Collapse.d.ts",
-		"build:examples": "cd examples && yarn && yarn build",
 		"dev": "vite",
 		"serve": "vite preview",
 		"start": "vite",
 		"prepare": "husky install"
 	},
 	"lint-staged": {
-		"*.{ts,tsx,css,md}": "prettier --write"
+		"*.{ts,tsx,md}": "prettier --write"
 	},
 	"dependencies": {},
 	"devDependencies": {

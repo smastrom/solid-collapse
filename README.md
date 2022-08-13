@@ -11,7 +11,7 @@ Tiny and performant collapse component for SolidJS.
 - Pure CSS height transition, no javascript animations
 - Minimal API: Just pass a boolean value and you're ready to go
 - Works within loops / async loops
-- Accordion-ready
+- Accordion-ready - [See examples](https://solid-collapse.onrender.com)
 - Super lightweight, only 500B gzipped
 
 <br />

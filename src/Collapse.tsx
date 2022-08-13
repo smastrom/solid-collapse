@@ -16,6 +16,7 @@ type CollapseProps = {
 	'aria-labelledby'?: string;
 	'aria-role'?: string;
 };
+
 /** Thank you for using **solid-collapse**. For more info read
  * the documentation at https://github.com/smastrom/solid-collapse.
  */

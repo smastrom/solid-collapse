@@ -13,7 +13,7 @@ export default defineConfig({
 			name: Package.name,
 			entry: 'src/index.ts',
 			fileName: 'index',
-			formats: ['es'],
+			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
 			external: ['solid-js', 'solid-js/web'],

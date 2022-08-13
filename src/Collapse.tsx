@@ -9,8 +9,11 @@ import {
 import { Dynamic } from 'solid-js/web';
 
 type CollapseProps = {
+	/** Reactive read-only value to trigger collapse. */
 	state: boolean;
+	/** Element tag to render instead of div. */
 	as?: keyof HTMLElementTagNameMap;
+	/** Classname with your transition. */
 	class?: string;
 	id?: string;
 	'aria-labelledby'?: string;

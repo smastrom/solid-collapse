@@ -9,20 +9,20 @@ Tiny and performant collapse component for SolidJS.
 ## Features
 
 - Pure CSS height transition, no javascript animations
-- Minimal API: Just pass a signal and you're ready to go
+- Minimal API: Just pass a boolean value and you're ready to go
 - Works within loops / async loops
-- Suitable for accordions
+- Accordion-ready
 - Super lightweight, only 500B gzipped
 
 <br />
 
 ## :jigsaw: API
 
-| Props     | Description                            | Type    | Default | Required           |
-| --------- | -------------------------------------- | ------- | ------- | ------------------ |
-| **state** | Boolean value to trigger collapse      | boolean | `false` | :white_check_mark: |
-| **class** | Classname of your transition           | string  | `''`    | :x:                |
-| **as**    | Element tag to render instead of `div` | string  | `div`   | :x:                |
+| Props     | Description                                 | Type    | Default | Required           |
+| --------- | ------------------------------------------- | ------- | ------- | ------------------ |
+| **state** | Readonly reactive value to trigger collapse | boolean | `false` | :white_check_mark: |
+| **class** | Classname with your transition              | string  | `''`    | :x:                |
+| **as**    | Element tag to render instead of `div`      | string  | `div`   | :x:                |
 
 `id`, `aria-role`, `aria-labelledby` are supported as well.
 
@@ -87,7 +87,7 @@ Since this package just provides a collapsible element, you are in charge of lin
 If your trigger is [focusable](https://html.spec.whatwg.org/multipage/interaction.html#focusable)
 (like a `summary` or a `button`), you already have out-of-the-box keyboard controls.
 
-You just have to set the aria-attributes as displayed below:
+You just have to set the aria-attributes:
 
 ```jsx
 const ID = 'my_collapse_id';
@@ -121,9 +121,9 @@ const App = () => {
 
 ### Non-focusable trigger
 
-If your trigger is not a native focusable element (like a `div`), in addition to aria attributes, you have to manually enable keyboard controls.
+If your trigger is not a native focusable element (like a `div`), in addition to aria attributes, you will have to manually enable keyboard controls.
 
-You can create a reusable function like the following one and spread it in your element.
+You can create a reusable function like the following one and spread it in your triggers.
 
 ```jsx
 import { Collapse, setKeyboard } from 'solid-collapse';

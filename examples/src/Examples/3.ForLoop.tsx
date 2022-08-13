@@ -1,6 +1,6 @@
 import { createSignal, For } from 'solid-js';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../pkg';
+import { Collapse } from 'solid-collapse';
 
 import fakeList from '../lib/fakeList.json';
 import styles from '../Components/AppLayout/styles.module.css';
@@ -17,13 +17,15 @@ export const ForLoopJSX = () => {
 	return (
 		<For each={fakeList}>
 			{({ title, description }, index) => (
-				<div class={styles.collapseContainer} style="margin-bottom: 20px;">
+				<div class={styles.collapseContainer}>
 					<div class={styles.collapseHeader}>
 						{title}
 						<button
 							onClick={() => handleOpen(index())}
 							aria-label="Open Collapse"
-							class={`${styles.chevronIcon}`}
+							class={`${styles.chevronButton} ${
+								signalsArr()[index()] ? `${styles.rotate} ${styles.activeChevron}` : ''
+							}`}
 						>
 							<ChevronIcon />
 						</button>
@@ -58,7 +60,7 @@ const App = () => {
 						<button
 							onClick={() => handleOpen(index())}
 							aria-label="Open Collapse"
-							class={styles.chevronIcon}
+							class={styles.chevronButton}
 						>
 							<ChevronIcon />
 						</button>

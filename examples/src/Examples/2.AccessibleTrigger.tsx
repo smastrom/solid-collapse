@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 import { setKeyDown } from '../lib/setKeyDown';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../pkg';
+import { Collapse } from 'solid-collapse';
 
 import styles from '../Components/AppLayout/styles.module.css';
 
@@ -21,7 +21,7 @@ export const AccessibleTriggerJSX = () => {
 			>
 				Where can I get some?
 				<div
-					class={`${styles.chevronIcon} ${
+					class={`${styles.chevronButton} ${
 						isOpen() ? `${styles.rotate} ${styles.activeChevron}` : ''
 					}`}
 				>
@@ -78,7 +78,7 @@ const App = () => {
 			>
 				Where can I get some?
 				<div
-					class={\`\${styles.chevronIcon} \${
+					class={\`\${styles.chevronButton} \${
 						isOpen() ? \`\${styles.rotate} \${styles.activeChevron}\` : ''}\`}
 				>
 					<ChevronIcon />

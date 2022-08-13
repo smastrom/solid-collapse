@@ -1,6 +1,6 @@
 import { createEffect, createResource, createSignal, For, Show, untrack } from 'solid-js';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../pkg';
+import { Collapse } from 'solid-collapse';
 
 import styles from '../Components/AppLayout/styles.module.css';
 import { Spinner } from '../Components/Spinner';
@@ -44,13 +44,15 @@ export const AsyncForLoopJSX = () => {
 			>
 				<For each={posts()}>
 					{(post, index) => (
-						<div class={styles.collapseContainer} style="margin-bottom: 20px;">
+						<div class={styles.collapseContainer}>
 							<div class={styles.collapseHeader}>
 								{post.title}
 								<button
 									onClick={() => handleOpen(index())}
 									aria-label="Open Collapse"
-									class={styles.chevronIcon}
+									class={`${styles.chevronButton} ${
+										signalsArr()[index()] ? `${styles.rotate} ${styles.activeChevron}` : ''
+									}`}
 								>
 									<ChevronIcon />
 								</button>
@@ -92,30 +94,28 @@ const App = () => {
 	};
 
 	return (
-		<div>
-			<Show when={posts()}>
-				<For each={posts()}>
-					{(post, index) => (
-						<div class={styles.collapseContainer}>
-							<div class={styles.collapseHeader}>
-								{post.title}
-								<button
-									onClick={() => handleOpen(index())}
-									aria-label="Open Collapse"
-									class={styles.chevronIcon}
-								>
-									<ChevronIcon />
-								</button>
-							</div>
-							<Show when={signalsArr()?.length > 0}>
-								<Collapse  state={signalsArr()[index()]} class={styles.collapseTransition}>
-									<div class={styles.collapseContent}>{post.body}</div>
-								</Collapse>
-							</Show>
+		<Show when={posts()}>
+			<For each={posts()}>
+				{(post, index) => (
+					<div class={styles.collapseContainer}>
+						<div class={styles.collapseHeader}>
+							{post.title}
+							<button
+								onClick={() => handleOpen(index())}
+								aria-label="Open Collapse"
+								class={styles.chevronButton}
+							>
+								<ChevronIcon />
+							</button>
 						</div>
-					)}
-				</For>
-			</Show>
-		</div>
+						<Show when={signalsArr()?.length > 0}>
+							<Collapse  state={signalsArr()[index()]} class={styles.collapseTransition}>
+								<div class={styles.collapseContent}>{post.body}</div>
+							</Collapse>
+						</Show>
+					</div>
+				)}
+			</For>
+		</Show>
 	);
 };`;

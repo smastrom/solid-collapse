@@ -1,6 +1,6 @@
 import { createSignal, For } from 'solid-js';
 import { ChevronIcon } from '../Components/Icons/ChevronIcon';
-import { Collapse } from '../../pkg';
+import { Collapse } from 'solid-collapse';
 
 import styles from '../Components/AppLayout/styles.module.css';
 
@@ -18,12 +18,12 @@ export const AccordionJSX = () => {
 	return (
 		<For each={fakeList}>
 			{({ title, description }, index) => (
-				<div class={styles.collapseContainer} style="margin-bottom: 20px;">
+				<div class={styles.collapseContainer}>
 					<div class={styles.collapseHeader}>
 						{title}
 						<button
 							onClick={() => handleAccordion(index())}
-							class={`${styles.chevronIcon} ${
+							class={`${styles.chevronButton} ${
 								signalsArr()[index()] ? `${styles.rotate} ${styles.activeChevron}` : ''
 							}`}
 						>
@@ -54,12 +54,12 @@ export const App = () => {
 	return (
 		<For each={fakeList}>
 			{({ title, description }, index) => (
-				<div class={styles.collapseContainer} style="margin-bottom: 20px;">
+				<div class={styles.collapseContainer}>
 					<div class={styles.collapseHeader}>
 						{title}
 						<button
 							onClick={() => handleAccordion(index())}
-							class={\`\${styles.chevronIcon} \${
+							class={\`\${styles.chevronButton} \${
 								signalsArr()[index()] ? \`\${styles.rotate} \${styles.activeChevron}\` : ''
 							}\`}
 						>

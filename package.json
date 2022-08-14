@@ -25,7 +25,8 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"import": "./dist/index.js"
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
 		}
 	},
 	"main": "dist/index.cjs",
@@ -36,8 +37,8 @@
 	],
 	"scripts": {
 		"build": "rimraf dist && vite build",
-		"build:ci": "rimraf dist && vite build --mode ci",
 		"postbuild": "cpy dist/Collapse.d.ts dist --rename index.d.ts --flat && rimraf dist/Collapse.d.ts",
+		"build:ci": "rimraf dist && vite build --mode ci",
 		"cypress:dev": "NODE_ENV=DEV cypress open",
 		"cypress:open": "NODE_ENV=CI cypress open",
 		"dev": "vite",

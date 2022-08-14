@@ -117,13 +117,13 @@ const App = () => {
 };
 ```
 
-[W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions)
+> Please note that this is the bare minimum config, for specific use cases please check the [W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions).
 
 ### Non-focusable trigger
 
 If your trigger is not a native focusable element (like a `div`), in addition to aria attributes, you will have to manually enable keyboard controls.
 
-You can create a reusable function like the following one and spread it in your triggers.
+You can create a reusable function like the following one to spread in your triggers:
 
 ```jsx
 import { Collapse, setKeyboard } from 'solid-collapse';

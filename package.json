@@ -36,12 +36,13 @@
 	],
 	"scripts": {
 		"build": "rimraf dist && vite build",
+		"build:ci": "rimraf dist && vite build --mode ci",
 		"postbuild": "cpy dist/Collapse.d.ts dist --rename index.d.ts --flat && rimraf dist/Collapse.d.ts",
-		"cypress:open": "cypress open",
+		"cypress:dev": "NODE_ENV=DEV cypress open",
+		"cypress:open": "NODE_ENV=CI cypress open",
 		"dev": "vite",
 		"prepare": "husky install",
-		"serve": "vite preview",
-		"start": "vite"
+		"preview": "vite preview"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,md}": "prettier --write"

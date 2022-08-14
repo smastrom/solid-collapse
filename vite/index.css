@@ -8,13 +8,16 @@ html {
 }
 
 body {
-	display: flex;
-	align-items: flex-start;
 	justify-content: center;
 	padding: 30px;
+	width: 100%;
 	min-height: 100vh;
 	overflow-y: scroll;
 	overflow-x: hidden;
+}
+
+#root {
+	width: 100%;
 }
 
 .transition {

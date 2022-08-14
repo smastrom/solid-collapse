@@ -7,13 +7,15 @@ export const App = () => {
 	const [isOpen, setIsOpen] = createSignal(false);
 
 	return (
-		<div>
-			<section>
-				<h1>Basic</h1>
-				<div style="width: 500px;">
+		<div style="max-width: 800px; width: 100%;">
+			<section style="width: 100%;">
+				<h1>Collapse</h1>
+				<div>
 					<header style="display: flex; justify-content: space-between;">
 						<h3>This is a collapse header</h3>
-						<button onClick={() => setIsOpen(!isOpen())}>Open</button>
+						<button onClick={() => setIsOpen(!isOpen())} id="button">
+							Open
+						</button>
 					</header>
 					<Collapse
 						id="collapse"
@@ -22,21 +24,10 @@ export const App = () => {
 						class="transition"
 						aria-role="region"
 						aria-labelledby="X"
-						data-testid="test-basic"
 					>
 						{text}
 					</Collapse>
 				</div>
-			</section>
-
-			<section>
-				<h1>Loop</h1>
-				<div style="width: 500px;"></div>
-			</section>
-
-			<section>
-				<h1>Accordion</h1>
-				<div style="width: 500px;"></div>
 			</section>
 		</div>
 	);

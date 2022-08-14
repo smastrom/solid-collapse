@@ -3,12 +3,13 @@
 
 const trigger = '#button';
 const collapse = '#collapse';
-const duration = 300;
+const transition = 300;
 const repeat = new Array(4).fill(undefined);
+const CYPRESS_URL = Cypress.env('CYPRESS_URL');
 
 describe('CSS properties', () => {
 	beforeEach(() => {
-		cy.visit('http://localhost:3000');
+		cy.visit(CYPRESS_URL);
 		cy.viewport('macbook-15');
 	});
 
@@ -40,7 +41,7 @@ describe('CSS properties', () => {
 				.should('have.css', 'display', 'block')
 				.and('not.have.css', 'display', 'none');
 
-			cy.wait(duration / 2)
+			cy.wait(transition / 2)
 				.get(trigger)
 				.click();
 
@@ -55,7 +56,7 @@ describe('CSS properties', () => {
 			cy.get(trigger).click();
 			cy.get(collapse).should('not.have.css', 'height', '0px');
 
-			cy.wait(duration / 2)
+			cy.wait(transition / 2)
 				.get(trigger)
 				.click();
 
@@ -68,10 +69,10 @@ describe('CSS properties', () => {
 			cy.get(trigger).click();
 			cy.get(collapse).should('not.have.css', 'height', '0px');
 
-			cy.wait(duration + 50);
+			cy.wait(transition + 50);
 			cy.get(trigger).click();
 
-			cy.wait(duration + 50);
+			cy.wait(transition + 50);
 			cy.get(collapse).should('have.css', 'height', '0px');
 		});
 	});
@@ -79,7 +80,7 @@ describe('CSS properties', () => {
 
 describe('Height in-depth', () => {
 	beforeEach(() => {
-		cy.visit('http://localhost:3000');
+		cy.visit(CYPRESS_URL);
 		cy.viewport('macbook-15');
 	});
 
@@ -89,7 +90,7 @@ describe('Height in-depth', () => {
 			let scrollHeight;
 
 			cy.get(trigger).click();
-			cy.wait(duration);
+			cy.wait(transition);
 
 			cy.document().then((doc) => {
 				// @ts-ignore
@@ -98,7 +99,7 @@ describe('Height in-depth', () => {
 			});
 
 			cy.get(trigger).click();
-			cy.wait(duration);
+			cy.wait(transition);
 			cy.document().then((doc) => {
 				cy.get(collapse).invoke('height').should('eq', 0);
 			});
@@ -120,7 +121,7 @@ describe('Height in-depth', () => {
 
 describe('Resize', () => {
 	beforeEach(() => {
-		cy.visit('http://localhost:3000');
+		cy.visit(CYPRESS_URL);
 		cy.viewport('macbook-15');
 	});
 
@@ -131,7 +132,7 @@ describe('Resize', () => {
 			repeat.forEach((_, index) => {
 				if (index === 0) {
 					cy.get(trigger).click();
-					cy.wait(duration);
+					cy.wait(transition);
 				}
 				cy.document().then((doc) => {
 					if (index === 0) {
@@ -158,7 +159,7 @@ describe('Resize', () => {
 
 			repeat.forEach((_, index) => {
 				cy.get(trigger).click(); // Open
-				cy.wait(duration);
+				cy.wait(transition);
 
 				cy.document().then((doc) => {
 					if (index === 0) {
@@ -166,21 +167,21 @@ describe('Resize', () => {
 						scrollHeight = doc.getElementById('collapse').scrollHeight;
 					}
 					cy.get(trigger).click(); // Close
-					cy.wait(duration);
+					cy.wait(transition);
 
 					cy.viewport('iphone-x');
 					cy.get(trigger).click(); // Open
-					cy.wait(duration);
+					cy.wait(transition);
 					cy.get(collapse).invoke('height').should('be.greaterThan', scrollHeight);
 					cy.get(trigger).click(); // Close
-					cy.wait(duration);
+					cy.wait(transition);
 
 					cy.viewport('macbook-15');
 					cy.get(trigger).click(); // Open
-					cy.wait(duration);
+					cy.wait(transition);
 					cy.get(collapse).invoke('height').should('eq', scrollHeight);
 					cy.get(trigger).click(); // Close
-					cy.wait(duration);
+					cy.wait(transition);
 				});
 			});
 		});

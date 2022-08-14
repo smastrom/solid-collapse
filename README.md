@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/v/solid-collapse?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/smastrom/solid-collapse/Tests?color=46c119&label=tests) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/smastrom/solid-collapse.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/smastrom/solid-collapse/context:javascript) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/solid-collapse?color=46c119)
+
 # Solid Collapse
 
 Tiny and performant collapse component for SolidJS.

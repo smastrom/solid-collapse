@@ -20,7 +20,7 @@ Tiny and performant collapse component for SolidJS.
 
 | Props     | Description                                 | Type    | Default | Required           |
 | --------- | ------------------------------------------- | ------- | ------- | ------------------ |
-| **value** | Readonly reactive value to trigger collapse | boolean | `false` | :white_check_mark: |
+| **value** | Readonly reactive value to control collapse | boolean | `false` | :white_check_mark: |
 | **class** | Classname with your transition              | string  | `''`    | :x:                |
 | **as**    | Element tag to render instead of `div`      | string  | `div`   | :x:                |
 
@@ -85,9 +85,7 @@ Since this package just provides a collapsible element, you are in charge of lin
 ### Focusable trigger
 
 If your trigger is [focusable](https://html.spec.whatwg.org/multipage/interaction.html#focusable)
-(like a `summary` or a `button`), you already have out-of-the-box keyboard controls.
-
-You just have to set the aria-attributes:
+(like a `summary` or a `button`), you just have to set the aria-attributes:
 
 ```jsx
 const ID = 'my_collapse_id';
@@ -117,13 +115,13 @@ const App = () => {
 };
 ```
 
-> Please note that this is the bare minimum config, for specific use cases please check the [W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions).
+> Please note that this is the bare minimum config, always check the [W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions) to be sure your UI is compliant.
 
 ### Non-focusable trigger
 
-If your trigger is not a native focusable element (like a `div`), in addition to aria attributes, you will have to manually enable keyboard controls.
+If your trigger is not a native focusable element (like a `div`), you will have to enable keyboard controls manually.
 
-You can create a reusable function like the following one to spread in your triggers:
+You can create a reusable function like this to spread in your triggers:
 
 ```jsx
 import { Collapse, setKeyboard } from 'solid-collapse';
@@ -150,7 +148,7 @@ const App = () => {
         onClick={() => setIsOpen(!isOpen())}
         aria-controls={ID}
         aria-expanded={isOpen()}
-        {...setKeyDown(setIsOpen)} // Spread the function
+        {...setKeyDown(setIsOpen)}
       >
         Expand me
       </div>

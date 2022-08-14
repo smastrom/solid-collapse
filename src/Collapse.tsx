@@ -56,7 +56,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 
 					if (typeof prevFrame === 'number') {
 						if (currentState) {
-							collapseElem.style.display = '';
+							collapseElem.style.display = 'block';
 							collapseElem.style.height = `${collapseElem.scrollHeight}px`;
 						} else {
 							collapseElem.style.overflow = 'hidden';

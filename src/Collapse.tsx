@@ -10,7 +10,7 @@ import { Dynamic } from 'solid-js/web';
 
 type CollapseProps = {
 	/** Reactive read-only value to trigger collapse. */
-	state: boolean;
+	value: boolean;
 	/** Element tag to render instead of div. */
 	as?: keyof HTMLElementTagNameMap;
 	/** Classname with your transition. */
@@ -29,7 +29,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	const mergedProps = mergeProps({ class: '', as: 'div', state: false }, props);
 
 	onMount(() => {
-		if (!mergedProps.state) {
+		if (!mergedProps.value) {
 			collapseElem.style.overflow = 'hidden';
 			collapseElem.style.height = '0px';
 			collapseElem.style.display = 'none';
@@ -37,7 +37,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	});
 
 	createEffect((prevState) => {
-		const currentState = mergedProps.state;
+		const currentState = mergedProps.value;
 		untrack(() => {
 			if (prevState !== currentState) {
 				let requestId: number;
@@ -73,7 +73,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	});
 
 	const handleTransitionEnd = () => {
-		if (mergedProps.state) {
+		if (mergedProps.value) {
 			collapseElem.style.overflow = '';
 			collapseElem.style.height = '';
 		} else {

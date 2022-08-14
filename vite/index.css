@@ -1,0 +1,20 @@
+* {
+	box-sizing: border-box;
+}
+
+body,
+html {
+	margin: 0;
+}
+
+body {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 30px;
+	min-height: 100vh;
+}
+
+.transition {
+	transition: height 300ms ease-out;
+}

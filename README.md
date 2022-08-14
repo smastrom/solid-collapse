@@ -12,7 +12,7 @@ Tiny and performant collapse component for SolidJS.
 - Minimal API: Just pass a boolean value and you're ready to go
 - Works within loops / async loops
 - Accordion-ready - [See examples](https://solid-collapse.onrender.com)
-- Super lightweight, only 500B gzipped
+- Super lightweight, only 500B gzipped.
 
 <br />
 
@@ -20,7 +20,7 @@ Tiny and performant collapse component for SolidJS.
 
 | Props     | Description                                 | Type    | Default | Required           |
 | --------- | ------------------------------------------- | ------- | ------- | ------------------ |
-| **state** | Readonly reactive value to trigger collapse | boolean | `false` | :white_check_mark: |
+| **value** | Readonly reactive value to trigger collapse | boolean | `false` | :white_check_mark: |
 | **class** | Classname with your transition              | string  | `''`    | :x:                |
 | **as**    | Element tag to render instead of `div`      | string  | `div`   | :x:                |
 
@@ -66,7 +66,7 @@ const App = () => {
       <button type="button" onClick={() => setIsOpen(!isOpen())}>
         Expand me
       </button>
-      <Collapse state={isOpen()} class="my-transition">
+      <Collapse value={isOpen()} class="my-transition">
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>
@@ -105,7 +105,7 @@ const App = () => {
         Expand me
       </button>
       <Collapse
-        state={isOpen()}
+        value={isOpen()}
         class="collapse"
         id={ID} // 1.
         aria-role="region" // 4.
@@ -154,7 +154,7 @@ const App = () => {
       >
         Expand me
       </div>
-      <Collapse state={isOpen()} class="collapse" id={ID} aria-role="region">
+      <Collapse value={isOpen()} class="collapse" id={ID} aria-role="region">
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>

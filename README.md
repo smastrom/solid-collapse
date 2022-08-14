@@ -88,7 +88,8 @@ If your trigger is [focusable](https://html.spec.whatwg.org/multipage/interactio
 (like a `summary` or a `button`), you just have to set the aria-attributes:
 
 ```jsx
-const ID = 'my_collapse_id';
+const B_ID = 'my_button_id';
+const C_ID = 'my_collapse_id';
 
 const App = () => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -96,17 +97,20 @@ const App = () => {
   return (
     <div>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen())}
-        aria-controls={ID} // 2.
-        aria-expanded={isOpen()} // 3.
+        id={B_ID} // 1.
+        aria-controls={C_ID} // 3.
+        aria-expanded={isOpen()} // 6.
       >
-        Expand me
+        Expand some
       </button>
       <Collapse
         value={isOpen()}
-        class="collapse"
-        id={ID} // 1.
-        aria-role="region" // 4.
+        class="my-transition"
+        id={C_ID} // 2.
+        aria-role="region" // 5.
+        aria-labelledby={B_ID} // 4.
       >
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
@@ -115,7 +119,7 @@ const App = () => {
 };
 ```
 
-> Please note that this is the bare minimum config, always check the [W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions) to be sure your UI is compliant.
+> Please note that this is an example that fits the code above. Check the [W3C Reference](https://www.w3.org/WAI/GL/wiki/Using_the_WAI-ARIA_aria-expanded_state_to_mark_expandable_and_collapsible_regions) to make sure your UI is compliant.
 
 ### Non-focusable trigger
 
@@ -137,7 +141,8 @@ const setKeyDown = (setter) => ({
   },
 });
 
-const ID = 'my_collapse_id';
+const B_ID = 'my_button_id';
+const C_ID = 'my_collapse_id';
 
 const App = () => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -146,13 +151,20 @@ const App = () => {
     <div>
       <div
         onClick={() => setIsOpen(!isOpen())}
-        aria-controls={ID}
+        id={B_ID}
+        aria-controls={C_ID}
         aria-expanded={isOpen()}
-        {...setKeyDown(setIsOpen)}
+        {...setKeyDown(setIsOpen)} // Spread the function
       >
         Expand me
       </div>
-      <Collapse value={isOpen()} class="collapse" id={ID} aria-role="region">
+      <Collapse
+        value={isOpen()}
+        class="my-transition"
+        id={C_ID}
+        aria-role="region"
+        aria-labelledby={B_ID}
+      >
         I am a bunch of collapsed text that wants to be expanded
       </Collapse>
     </div>

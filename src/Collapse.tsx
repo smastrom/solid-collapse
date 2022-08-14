@@ -18,6 +18,7 @@ type CollapseProps = {
 	id?: string;
 	'aria-labelledby'?: string;
 	'aria-role'?: string;
+	'data-testid'?: string;
 };
 
 /** Thank you for using **solid-collapse**. For more info read
@@ -26,7 +27,7 @@ type CollapseProps = {
 export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	let collapseElem: HTMLElement;
 
-	const mergedProps = mergeProps({ class: '', as: 'div', state: false }, props);
+	const mergedProps = mergeProps({ class: '', as: 'div', value: false }, props);
 
 	onMount(() => {
 		if (!mergedProps.value) {
@@ -87,8 +88,9 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 		<Dynamic
 			id={mergedProps.id}
 			ref={setRef}
-			aria-labelledby={props['aria-labelledby']}
-			aria-role={props['aria-role']}
+			data-testid={mergedProps['data-testid']}
+			aria-labelledby={mergedProps['aria-labelledby']}
+			aria-role={mergedProps['aria-role']}
 			component={mergedProps.as}
 			class={mergedProps.class}
 			onTransitionEnd={handleTransitionEnd}

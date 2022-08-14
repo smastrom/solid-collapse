@@ -13,8 +13,14 @@ body {
 	justify-content: center;
 	padding: 30px;
 	min-height: 100vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .transition {
 	transition: height 300ms ease-out;
+}
+
+section {
+	margin-bottom: 60px;
 }

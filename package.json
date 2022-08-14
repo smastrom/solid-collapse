@@ -1,7 +1,6 @@
 {
 	"name": "solid-collapse",
 	"version": "0.9.0",
-	"author": "Simone Mastromattei <smastrom@proton.me>",
 	"private": "false",
 	"description": "Tiny and performant collapse component for SolidJS.",
 	"keywords": [
@@ -21,6 +20,7 @@
 		"url": "https://github.com/smastrom/solid-collapse.git"
 	},
 	"license": "MIT",
+	"author": "Simone Mastromattei <smastrom@proton.me>",
 	"sideEffects": false,
 	"type": "module",
 	"exports": {
@@ -37,10 +37,11 @@
 	"scripts": {
 		"build": "rimraf dist && vite build",
 		"postbuild": "cpy dist/Collapse.d.ts dist --rename index.d.ts --flat && rimraf dist/Collapse.d.ts",
+		"cypress:open": "cypress open",
 		"dev": "vite",
+		"prepare": "husky install",
 		"serve": "vite preview",
-		"start": "vite",
-		"prepare": "husky install"
+		"start": "vite"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,md}": "prettier --write"
@@ -48,6 +49,7 @@
 	"dependencies": {},
 	"devDependencies": {
 		"cpy-cli": "^4.1.0",
+		"cypress": "^10.4.0",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.0.3",
 		"prettier": "^2.7.1",

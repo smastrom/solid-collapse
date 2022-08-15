@@ -4,7 +4,8 @@
 const trigger = '#button';
 const collapse = '#collapse';
 const transition = 300;
-const repeat = new Array(4).fill(undefined);
+const repeatTimes = 10;
+const repeat = new Array(repeatTimes).fill(undefined);
 const CYPRESS_URL = Cypress.env('CYPRESS_URL');
 
 describe('CSS properties', () => {

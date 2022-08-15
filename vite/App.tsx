@@ -11,18 +11,18 @@ export const App = () => {
 			<section style="width: 100%;">
 				<h1>Collapse</h1>
 				<div>
-					<header style="display: flex; justify-content: space-between;">
+					<div style="display: flex; justify-content: space-between;" id="X">
 						<h3>This is a collapse header</h3>
 						<button onClick={() => setIsOpen(!isOpen())} id="button">
 							Open
 						</button>
-					</header>
+					</div>
 					<Collapse
 						id="collapse"
 						value={isOpen()}
 						as="span"
 						class="transition"
-						aria-role="region"
+						role="region"
 						aria-labelledby="X"
 					>
 						{text}

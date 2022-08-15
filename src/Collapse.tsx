@@ -16,8 +16,8 @@ type CollapseProps = {
 	/** Classname with your transition. */
 	class?: string;
 	id?: string;
+	role?: string;
 	'aria-labelledby'?: string;
-	'aria-role'?: string;
 };
 
 /** Thank you for using **solid-collapse**. For more info read
@@ -34,6 +34,9 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 			collapseElem.style.height = '0px';
 			collapseElem.style.display = 'none';
 		}
+		collapseElem.style.margin = '0px';
+		collapseElem.style.padding = '0px';
+		collapseElem.style.border = '0px';
 	});
 
 	createEffect((prevState) => {
@@ -88,7 +91,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 			id={mergedProps.id}
 			ref={setRef}
 			aria-labelledby={mergedProps['aria-labelledby']}
-			aria-role={mergedProps['aria-role']}
+			role={mergedProps.role}
 			component={mergedProps.as}
 			class={mergedProps.class}
 			onTransitionEnd={handleTransitionEnd}

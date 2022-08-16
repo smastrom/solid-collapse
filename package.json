@@ -1,6 +1,6 @@
 {
 	"name": "solid-collapse",
-	"version": "0.9.1",
+	"version": "1.0.0",
 	"description": "Tiny and performant collapse component for SolidJS.",
 	"keywords": [
 		"solid",

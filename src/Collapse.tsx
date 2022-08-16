@@ -77,8 +77,8 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 
 	const handleTransitionEnd = () => {
 		if (mergedProps.value) {
-			collapseElem.style.overflow = '';
-			collapseElem.style.height = '';
+			collapseElem.style.overflow = 'visible';
+			collapseElem.style.height = 'auto';
 		} else {
 			collapseElem.style.display = 'none';
 		}

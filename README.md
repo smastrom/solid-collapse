@@ -10,7 +10,8 @@ Tiny and performant collapse component for SolidJS.
 
 ## Features
 
-- Pure CSS dynamic height transition, no javascript animations.
+- Pure dynamic CSS height transition, no javascript animations.
+- No hidden visibility or absolute positioning hacks, just a natural block/none display behavior.
 - Minimal API: Just pass a boolean value and you're ready to go.
 - Works within loops / async loops
 - Accordion-ready - [See examples](https://solid-collapse.onrender.com)
@@ -48,8 +49,6 @@ yarn add solid-collapse
 .my-transition {
   transition: height 300ms cubic-bezier(0.65, 0, 0.35, 1);
 }
-
-/* Name the class however you prefer */
 ```
 
 > You can find a complete list of CSS easings at [easings.net](https://easings.net/).
@@ -69,7 +68,9 @@ const App = () => {
         Expand me
       </button>
       <Collapse value={isOpen()} class="my-transition">
-        I am a bunch of collapsed text that wants to be expanded
+        <p class="my-content-class">
+          I am a bunch of collapsed text that wants to be expanded
+        </p>
       </Collapse>
     </div>
   );
@@ -80,122 +81,23 @@ const App = () => {
 
 <br />
 
-## :open_umbrella: Accessibility
-
-Although you can render the collapse as any element you prefer, **you can't render it in a `<details>` element** in order to get native assistive technologies support.
-
-That's because the browser's default behavior will prevail over the component's one, preventing necessary styles injection and transitions.
-
-This means that you have to make accessible your UI by manually linking your trigger to the collapse.
-
-### A. Focusable trigger
-
-If your trigger is [focusable](https://html.spec.whatwg.org/multipage/interaction.html#focusable)
-(like a `button`), you just have to set the necessary aria-attributes:
-
-```jsx
-const B_ID = 'my_button_id';
-const C_ID = 'my_collapse_id';
-
-const App = () => {
-  const [isOpen, setIsOpen] = createSignal(false);
-
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen())}
-        // Trigger attributes
-        id={B_ID}
-        aria-controls={C_ID}
-        aria-expanded={isOpen()}
-      >
-        <h2>Do you ship your products outside EU?</h2>
-      </button>
-      <Collapse
-        as="p"
-        value={isOpen()}
-        class="my-transition"
-        // Collapse attributes
-        id={C_ID}
-        role="region"
-        aria-labelledby={B_ID}
-      >
-        Yes, we do ship our products to United States, Japan, Korea and Thailand.
-      </Collapse>
-    </div>
-  );
-};
-```
-
-> Please note that this is an example that fits the above scenario. Check [W3C](https://www.w3.org/WAI/ARIA/apg/example-index/) examples to make sure your use case is compliant.
-
-### B. Non-focusable trigger
-
-If your trigger is not focusable (like a `div` or `li`), you will have to set keyboard controls manually.
-
-You can create a reusable function that fits your use case and spread in your triggers:
-
-```jsx
-import { Collapse, setKeyboard } from 'solid-collapse';
-
-const setKeyDown = (setter) => ({
-  tabIndex: 0,
-  onKeyDown: (event) => {
-    if (event.code === 'Enter' || event.code === 'Space') {
-      event.stopPropagation();
-      event.preventDefault();
-      setter((accessor) => !accessor);
-    }
-  },
-});
-
-const D_ID = 'my_div_id';
-const C_ID = 'my_collapse_id';
-
-const App = () => {
-  const [isOpen, setIsOpen] = createSignal(false);
-
-  return (
-    <div>
-      <div
-        onClick={() => setIsOpen(!isOpen())}
-        id={D_ID}
-        aria-controls={C_ID}
-        aria-expanded={isOpen()}
-        // Spread the function
-        {...setKeyDown(setIsOpen)}
-      >
-        Open content
-      </div>
-      <Collapse
-        value={isOpen()}
-        class="my-transition"
-        id={C_ID}
-        role="region"
-        aria-labelledby={D_ID}
-      >
-        Some collapsed content
-      </Collapse>
-    </div>
-  );
-};
-```
-
-<br />
-
 ## :cyclone: For loops, accordions
 
 Please check the examples on the [demo website](https://solid-collapse.onrender.com).
 
 <br />
 
-## :no_mouth: Limitations
+## :no_mouth: Caveats
 
-You can't assign a `ref` to **Collapse**. If you need to access its DOM node, you have two options:
+1. Assigning a `ref` to Collapse is not possible. If you need to access its DOM node, you can either:
 
-- `document.getElementById` in an `onMount` callback
-- Assign a ref to its nearest child
+   - Call `document.getElementById` inside an `onMount` callback
+   - Assign a ref to its nearest child and access the parent
+
+2. Rendering Collapse inside a `<details>` element in order to get native
+   assistive technologies support is not possible. The browser's default behavior will prevail
+   over the component's one, preventing necessary styles injection and transitions.
+   You will have to make your UI compliant by manually implementing [ARIA practices](https://w3c.github.io/aria-practices/examples/) according to your use case.
 
 <br />
 

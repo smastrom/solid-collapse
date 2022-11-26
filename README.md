@@ -4,7 +4,7 @@
 
 Tiny and performant collapse component for SolidJS.
 
-[Demo and examples](https://solid-collapse.netlify.app) — [Stackblitz]()
+[Demo and examples](https://solid-collapse.netlify.app)
 
 <br />
 
@@ -13,7 +13,7 @@ Tiny and performant collapse component for SolidJS.
 | Prop            | Description                               | Type       | Default    | Required           |
 | --------------- | ----------------------------------------- | ---------- | ---------- | ------------------ |
 | **value**       | Boolean value to control collapse         | boolean    | `true`     | :white_check_mark: |
-| **class**       | Class with a transition (height) property | string     | `''`       | :white_check_mark: |
+| **class**       | Class with a (height)transition property  | string     | `''`       | :white_check_mark: |
 | **as**          | Element tag to render instead of `div`    | string     | `div`      | :x:                |
 | **onExpanded**  | Callback on expand transition completed.  | () => void | `() => {}` | :x:                |
 | **onCollapsed** | Callback on collapse transition completed | () => void | `() => {}` | :x:                |
@@ -27,7 +27,7 @@ Tiny and performant collapse component for SolidJS.
 ```bash
 yarn add solid-collapse
 # npm i -S solid-collapse
-# pnpm i solid-collapse
+# pnpm add solid-collapse
 ```
 
 <br/>

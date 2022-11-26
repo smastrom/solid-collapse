@@ -3,3 +3,5 @@ dist
 yarn.lock
 *.tgz
 cypress/downloads
+cypress/videos
+cypress/screenshots

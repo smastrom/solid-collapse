@@ -4,7 +4,7 @@ import solidPlugin from 'vite-plugin-solid';
 import Package from './package.json';
 
 export default defineConfig(({ mode }) => {
-	if (mode === 'ci') {
+	if (mode === 'app') {
 		return {
 			plugins: [solidPlugin()],
 		};

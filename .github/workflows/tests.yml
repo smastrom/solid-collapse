@@ -1,7 +1,6 @@
 name: Tests
 
 on: [push]
-    
 
 jobs:
   cypress-run:
@@ -17,5 +16,5 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          build: yarn build:ci
+          build: yarn build:app
           start: yarn preview

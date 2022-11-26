@@ -6,6 +6,14 @@ const text = `Hello I am bunch of collapsed text that wants to be expanded. `.re
 export const App = () => {
 	const [isOpen, setIsOpen] = createSignal(false);
 
+	function onExpanded() {
+		console.log('Expanded');
+	}
+
+	function onCollapsed() {
+		console.log('Collapsed');
+	}
+
 	return (
 		<div style="max-width: 800px; width: 100%;">
 			<section style="width: 100%;">
@@ -18,9 +26,10 @@ export const App = () => {
 						</button>
 					</div>
 					<Collapse
+						onCollapsed={onCollapsed}
+						onExpanded={onExpanded}
 						id="collapse"
 						value={isOpen()}
-						as="span"
 						class="transition"
 						role="region"
 						aria-labelledby="X"

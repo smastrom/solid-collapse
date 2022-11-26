@@ -1,0 +1,206 @@
+:root {
+	--BackgroundColor: #1d2533;
+	--BackgroundAltColor: #232f43;
+	--HoverAccentColor: #aea7ff;
+	--AccentColor: #6257ed;
+	--BorderOpaqueColor: #3d485a;
+	--TextColor: #dddbea;
+	--TransparentColor: rgba(0, 0, 0, 0);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: var(--BackgroundColor);
+}
+
+h1,
+h2,
+h3,
+p {
+	margin: 0;
+	font-size: 100%;
+}
+
+.CollapseTransition {
+	transition: height var(--sc-auto-duration) cubic-bezier(0.3, 0, 0.6, 1);
+}
+
+.Wrapper {
+	--padding: 20px;
+	background-color: var(--BackgroundColor);
+	color: var(--TextColor);
+	display: flex;
+	flex-direction: column;
+	padding: var(--padding);
+	align-items: center;
+	min-height: 100vh;
+}
+
+.Header {
+	display: flex;
+	place-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Header svg {
+	display: flex;
+	width: 30px;
+	height: 30px;
+	fill: var(--TextColor);
+	transition: fill 200ms linear;
+}
+
+.HeaderTitle {
+	color: white;
+	font-size: 2.225rem;
+	margin: 10px 0 0 0;
+	text-align: center;
+}
+
+.HeaderCredits {
+	font-size: 0.825rem;
+	margin: 10px 0 30px 0;
+}
+
+.HeaderCredits a {
+	text-decoration: underline;
+	color: white;
+	transition: color 100ms;
+}
+
+.HeaderCredits a:hover {
+	color: var(--HoverAccentColor);
+}
+
+.MainContent {
+	width: 100%;
+	max-width: 600px;
+	margin: 50px auto;
+}
+
+.ExampleWrapper {
+	display: flex;
+	place-content: center;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+	margin-bottom: 60px;
+}
+
+.CollapseContainer {
+	width: 100%;
+	border: 1px solid var(--BorderOpaqueColor);
+	border-radius: 10px;
+	background-color: var(--BackgroundAltColor);
+}
+
+.CollapseHeader {
+	gap: 10px;
+	font-size: 1.125rem;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: none;
+	border: none;
+	width: 100%;
+	color: var(--TextColor);
+	margin: 0;
+	cursor: pointer;
+	text-align: inherit;
+	padding: 15px;
+	transition: box-shadow 200ms ease-out;
+	border-radius: 10px;
+	box-shadow: 0 0 0 3px var(--TransparentColor);
+}
+
+.CollapseHeader:focus-visible {
+	outline: 1px solid var(--TransparentColor);
+	box-shadow: 0 0 0 4px var(--AccentColor);
+	border: 2px solid var(--HoverAccentColor);
+	border-radius: 10px;
+}
+
+.CollapseContent {
+	color: var(--TextColor);
+	padding: 10px 15px 15px 15px;
+	line-height: 1.75;
+	display: block;
+}
+
+.ChevronButton {
+	padding: 5px;
+	background-color: var(--TransparentColor);
+	border: none;
+	display: flex;
+	cursor: pointer;
+	border: 1px solid var(--TransparentColor);
+	aspect-ratio: 1;
+	border-radius: 5px;
+	align-items: center;
+	transition: background-color 200ms ease-out, border 200ms ease-out;
+}
+
+.ChevronButton svg {
+	transform: rotate(0deg);
+	stroke: white;
+}
+
+.ActiveChevron {
+	background-color: var(--AccentColor);
+	border: 1px solid var(--BorderOpaqueColor);
+}
+
+.ActiveChevron svg {
+	transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+	.Header a:hover svg {
+		fill: var(--HoverAccentColor) !important;
+	}
+
+	.ChevronButton:hover {
+		background-color: var(--AccentColor);
+	}
+
+	.Credits a:hover {
+		text-decoration: underline;
+		color: var(--HoverAccentColor);
+		transition: color 100ms linear;
+	}
+	.CollapseHeaderActive:hover {
+		box-shadow: 0 0 0 3px var(--AccentColor);
+	}
+}
+
+.ExampleHeader {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ExampleHeader h1 {
+	color: var(--TextColor);
+	font-size: 1.875rem;
+}
+
+.ExampleHeader a {
+	color: var(--HoverAccentColor);
+	font-size: 1rem;
+	transition: color 100ms;
+}
+
+.ExampleHeader a:hover {
+	color: white;
+}

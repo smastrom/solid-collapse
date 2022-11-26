@@ -2,16 +2,16 @@ import { createEffect, createSignal, mergeProps, ParentComponent, untrack } from
 import { Dynamic } from 'solid-js/web';
 
 type CollapseProps = {
-	/** Reactive read-only value to trigger collapse. */
+	/** Reactive boolean to trigger collapse. */
 	value: boolean;
+	/** Class with a transition (height) property. */
+	class?: string;
 	/** Element tag to render instead of div. */
 	as?: keyof HTMLElementTagNameMap;
 	/** Callback on expand transition completed. */
 	onExpanded?: () => void;
 	/** Callback on collapse transition completed. */
 	onCollapsed?: () => void;
-	/** Classname with your height transition. */
-	class?: string;
 	id?: string;
 	role?: string;
 	'aria-labelledby'?: string;
@@ -42,7 +42,7 @@ export const Collapse: ParentComponent<CollapseProps> = (props) => {
 	let collapseElem: HTMLElement;
 
 	const mergedProps = mergeProps(
-		{ class: '', as: 'div', value: false, onCollapsed: () => {}, onExpanded: () => {} },
+		{ class: '', as: 'div', value: true, onCollapsed: () => {}, onExpanded: () => {} },
 		props
 	);
 

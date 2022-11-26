@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
-import dts from 'vite-plugin-dts';
 
 import Package from './package.json';
 
@@ -17,7 +16,7 @@ export default defineConfig(({ mode }) => {
 		build: {
 			lib: {
 				name: Package.name,
-				entry: 'src/index.ts',
+				entry: 'src/Collapse.tsx',
 				fileName: 'index',
 				formats: ['es', 'cjs'],
 			},
@@ -25,11 +24,6 @@ export default defineConfig(({ mode }) => {
 				external: ['solid-js', 'solid-js/web'],
 			},
 		},
-		plugins: [
-			solidPlugin(),
-			dts({
-				include: ['src/Collapse.tsx'],
-			}),
-		],
+		plugins: [solidPlugin()],
 	};
 });

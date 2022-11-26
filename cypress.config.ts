@@ -6,7 +6,6 @@ export default defineConfig({
 		setupNodeEvents() {},
 	},
 	env: {
-		CYPRESS_URL:
-			process.env.NODE_ENV === 'DEV' ? 'http://localhost:3000' : 'http://localhost:4173',
+		CYPRESS_URL: 'http://localhost:4173',
 	},
 });

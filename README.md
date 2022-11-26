@@ -4,19 +4,19 @@
 
 Tiny and performant collapse component for SolidJS.
 
-[Demo and examples](https://solid-collapse.onrender.com)
+[Demo and examples](https://solid-collapse.netlify.app) — [Stackblitz]()
 
 <br />
 
 ## :jigsaw: API
 
-| Props           | Description                                 | Type       | Default    | Required           |
-| --------------- | ------------------------------------------- | ---------- | ---------- | ------------------ |
-| **value**       | Boolean value to control collapse           | boolean    | `false`    | :white_check_mark: |
-| **class**       | Class with a transition (height) property   | string     | `''`       | :white_check_mark: |
-| **as**          | Element tag to render instead of `div`      | string     | `div`      | :x:                |
-| **onExpanded**  | Readonly reactive value to control collapse | () => void | `() => {}` | :x:                |
-| **onCollapsed** | Readonly reactive value to control collapse | () => void | `() => {}` | :x:                |
+| Prop            | Description                               | Type       | Default    | Required           |
+| --------------- | ----------------------------------------- | ---------- | ---------- | ------------------ |
+| **value**       | Boolean value to control collapse         | boolean    | `true`     | :white_check_mark: |
+| **class**       | Class with a transition (height) property | string     | `''`       | :white_check_mark: |
+| **as**          | Element tag to render instead of `div`    | string     | `div`      | :x:                |
+| **onExpanded**  | Callback on expand transition completed.  | () => void | `() => {}` | :x:                |
+| **onCollapsed** | Callback on collapse transition completed | () => void | `() => {}` | :x:                |
 
 `id`, `role` and `aria-labelledby` are also supported.
 
@@ -42,8 +42,6 @@ yarn add solid-collapse
 }
 ```
 
-> You can find a complete list of CSS easings at [easings.net](https://easings.net/).
-
 **2. In a component file:**
 
 ```jsx
@@ -51,14 +49,12 @@ import { createSignal } from 'solid-js';
 import { Collapse } from 'solid-collapse';
 
 const App = () => {
-  const [isOpen, setIsOpen] = createSignal(false);
+  const [isExpanded, setIsExpanded] = createSignal(false);
 
   return (
     <div>
-      <button type="button" onClick={() => setIsOpen(!isOpen())}>
-        Expand me
-      </button>
-      <Collapse value={isOpen()} class="my-transition">
+      <button onClick={() => setIsExpanded(!isExpanded())}>Expand me</button>
+      <Collapse value={isExpanded()} class="my-transition">
         <p class="my-content-class">
           I am a bunch of collapsed text that wants to be expanded
         </p>
@@ -72,11 +68,11 @@ const App = () => {
 
 ## :clock1: Auto Duration
 
-Solid Collapse automatically calculates the optimal duration according to the content height. You can use it by referencing the variable `--sc-auto-duration` in your transition property:
+Solid Collapse automatically calculates the optimal duration according to the content height. You can opt-it by referencing the variable `--sc-auto-duration` in your transition property:
 
 ```css
 .my-transition {
-  transition: height var(--vc-auto-duration) ease-out;
+  transition: height var(--sc-auto-duration) cubic-bezier(0.65, 0, 0.35, 1);
 }
 ```
 
@@ -84,15 +80,15 @@ Solid Collapse automatically calculates the optimal duration according to the co
 
 ## :cyclone: For loops, accordions
 
-Please check the examples on the [demo website](https://solid-collapse.onrender.com).
+Please check the examples on the [demo website](https://solid-collapse.netlify.app).
 
 <br />
 
 ## :no_mouth: Caveats
 
-1. Assigning a `ref` to Collapse is not possible. If you need to access its DOM node, you can call `document.getElementById` inside an `onMount` callback
+1. Assigning a `ref` to Collapse is not possible. If you need to access its DOM node, you can call `document.getElementById` inside an `onMount` callback.
 
-2. You will have to make your UI compliant by manually implementing [ARIA practices](https://w3c.github.io/aria-practices/examples/) according to your use case.
+2. You will have to make your UI compliant by manually implementing [ARIA practices](https://w3c.github.io/aria-practices/examples/). Don't worry any [example](https://solid-collapse.netlify.app) shows how to do that.
 
 <br />
 

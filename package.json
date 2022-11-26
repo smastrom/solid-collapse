@@ -39,8 +39,7 @@
 		"declare": "tsc src/Collapse.tsx --declaration --emitDeclarationOnly --jsx preserve",
 		"postbuild": "cpy src/Collapse.d.ts dist --rename index.d.ts --flat && rimraf src/Collapse.d.ts",
 		"build:app": "rimraf dist && vite build --mode app",
-		"cypress:dev": "NODE_ENV=DEV cypress open",
-		"cypress:open": "NODE_ENV=CI cypress open",
+		"test": "yarn cypress run",
 		"dev": "vite",
 		"prepare": "husky install",
 		"preview": "vite preview"

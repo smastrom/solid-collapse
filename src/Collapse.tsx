@@ -20,6 +20,7 @@ type CollapseProps = {
 const fixedStyles = {
 	padding: 0,
 	border: 0,
+	margin: 0,
 };
 
 const collapsedStyles = {

@@ -94,6 +94,7 @@ p {
 	align-items: center;
 	gap: 30px;
 	margin-bottom: 60px;
+	width: 100%;
 }
 
 .CollapseContainer {

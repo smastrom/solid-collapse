@@ -1,4 +1,4 @@
-![npm](https://img.shields.io/npm/v/solid-collapse?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/smastrom/solid-collapse/Tests?color=46c119&label=tests) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/solid-collapse?color=46c119)
+![npm](https://img.shields.io/npm/v/solid-collapse?color=46c119) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/smastrom/solid-collapse/tests.yml?branch=main&label=tests) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/solid-collapse?color=46c119)
 
 # Solid Collapse
 
@@ -94,4 +94,4 @@ Please check the examples on the [demo website](https://solid-collapse.netlify.a
 
 ## :dvd: License
 
-MIT Licensed. Copyright (c) Simone Mastromattei 2022.
+MIT
